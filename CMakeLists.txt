@@ -22,10 +22,9 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/wrapper/
 )
 
+add_compile_options(-std=c++11)
 
 add_library(lua ${libluafilesrc} ${wrappersrc})
-
-add_compile_options(-std=c++11)
 
 add_executable(Tests tests/main.cpp)
 
