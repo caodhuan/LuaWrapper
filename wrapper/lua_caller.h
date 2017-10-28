@@ -9,10 +9,10 @@ struct lua_State;
 
 class LuaResult;
 
-class ScriptManager;
+class LuaManager;
 
 class LuaCaller {
-	friend ScriptManager;
+	friend LuaManager;
 public:
 	LuaCaller() {};
 

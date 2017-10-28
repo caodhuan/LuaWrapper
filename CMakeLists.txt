@@ -25,7 +25,7 @@ include_directories(
 
 add_library(lua ${libluafilesrc} ${wrappersrc})
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++0x)
 
 add_executable(Tests tests/main.cpp)
 
