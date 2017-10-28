@@ -3,4 +3,4 @@ addons:
   apt:
     packages:
     - cmake
-script: cmake .
+script: cmake . && make
