@@ -3,4 +3,6 @@ addons:
   apt:
     packages:
     - cmake
+before_install:
+	- sudo apt-get install gcc-4.8 -y
 script: cmake . && make
