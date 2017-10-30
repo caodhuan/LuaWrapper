@@ -27,7 +27,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++11")
 add_library(lua ${libluafilesrc} ${wrappersrc})
 
 
-# 构造一个头文件，用来标识一些变�?
+# 构造一个头文件，用来标识一些变量
 set(COMMONHEADER "${CMAKE_CURRENT_SOURCE_DIR}/tests/common.h")
 
 file(WRITE ${COMMONHEADER} "#pragma once\n")

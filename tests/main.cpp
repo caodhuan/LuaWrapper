@@ -41,10 +41,24 @@ void TestWithMutiReturn() {
 
 }
 
+static int CppAddAndSub(lua_State* pState) {
+	int first = luaL_checkinteger(pState, 1);
+	int second = luaL_checkinteger(pState, 2);
+
+	lua_pushinteger(pState, first + second);
+	lua_pushinteger(pState, first - second);
+
+	return 2;
+}
+
+
 int main() {
 	gLuaManager.InitScript();
 
+	RegistFuntion2Lua(CppAddAndSub);
+
 	gLuaManager.LoadScript(SOURCEPATH, "main.lua");
+
 
 	TestNoArg();
 	TestWithArgs();
