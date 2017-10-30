@@ -55,7 +55,6 @@ int LuaCaller::Traceback(lua_State *pState) {
 	const char *msg = lua_tostring(pState, -1);
 
 	if (msg) {
-		printf("%s\n", msg); // 显示在控制台提示一下
 		gLuaManager.TryError(msg);
 	}
 

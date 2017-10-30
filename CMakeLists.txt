@@ -26,6 +26,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++11")
 
 add_library(lua ${libluafilesrc} ${wrappersrc})
 
-add_executable(Tests tests/main.cpp)
+
+# 构造一个头文件，用来标识一些变�?
+set(COMMONHEADER "${CMAKE_CURRENT_SOURCE_DIR}/tests/common.h")
+
+file(WRITE ${COMMONHEADER} "#pragma once\n")
+file(APPEND ${COMMONHEADER} "#define SOURCEPATH \"${CMAKE_CURRENT_SOURCE_DIR}/scripts/\"\n")
+
+add_executable(Tests tests/main.cpp tests/common.h)
 
 target_link_libraries(Tests lua)
+

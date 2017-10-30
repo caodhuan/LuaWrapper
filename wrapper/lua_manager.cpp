@@ -5,14 +5,6 @@
 #include <sstream>
 #include <stdint.h>
 
-static const char * initScript =
-"local path,script = ...\n"
-"path = string.match(path,[[(.*)/[^/]*$]])\n"
-"package.path = package.path .. [[;]] .. path .. [[/?.lua;]] .. path .. [[/?/init.lua]]\n"
-"local f = assert(loadfile(script))\n"
-"f(script)\n"
-;
-
 static const char* funTable = "__SCRIPT__FUNCTION__";
 static ScriptHandler globalhandler = 0;
 
@@ -29,45 +21,6 @@ LuaManager::~LuaManager() {
 		lua_close(m_pState);
 		m_pState = NULL;
 	}
-}
-
-static int errorlog(lua_State* L) {
-	std::stringstream str;
-	int n = lua_gettop(L);  /* number of arguments */
-
-	lua_getglobal(L, "All2String");
-	lua_insert(L, 1);
-
-	lua_pcall(L, n, 1, 0);
-
-	const char* msg = luaL_checkstring(L, -1);
-
-	str << msg;
-
-	gLuaManager.TryError(str.str().c_str());
-
-	return 0;
-}
-
-// 为了屏蔽掉lua向标准输出设备输出字符串的问题
-static int print(lua_State *L) {
-
-	std::stringstream str;
-	int n = lua_gettop(L);  /* number of arguments */
-
-	lua_getglobal(L, "All2String");
-	lua_insert(L, 1);
-
-	lua_pcall(L, n, 1, 0);
-
-
-	const char* msg = luaL_checkstring(L, -1);
-
-	str << msg;
-
-	gLuaManager.TryLog(str.str().c_str());
-
-	return 0;
 }
 
 static int Panic(lua_State* pState) {
@@ -93,11 +46,7 @@ void LuaManager::InitScript() {
 	lua_pushstring(m_pState, funTable); //key
 	lua_newtable(m_pState);				// handler table
 	lua_rawset(m_pState, LUA_REGISTRYINDEX); // regist[funTable] = {}
-
-	RegistFuntion2Lua(print);
-	RegistFuntion2Lua(errorlog);
 }
-
 
 void LuaManager::AddSearchPath(const char* path) {
 
@@ -107,15 +56,8 @@ void LuaManager::AddSearchPath(const char* path) {
 }
 
 void LuaManager::LoadScript(const char* path, const char* startScriptFile) {
-	lua_pushcfunction(m_pState, LuaCaller::Traceback);
-
-	int tb = lua_gettop(m_pState);
-	luaL_loadstring(m_pState, initScript);
-
-	lua_pushstring(m_pState, path);
-	lua_pushstring(m_pState, startScriptFile);
-
-	lua_pcall(m_pState, 2, 0, tb);
+	AddSearchPath(path);
+	ExecuteFile((std::string(path) + startScriptFile).c_str());
 }
 
 void LuaManager::RegistFunction2Lua(const char* funName, lua_CFunction fun) {
