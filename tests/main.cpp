@@ -59,11 +59,22 @@ int main() {
 
 	gLuaManager.LoadScript(SOURCEPATH, "main.lua");
 
-
 	TestNoArg();
 	TestWithArgs();
 	TestWithReturn();
 	TestWithMutiReturn();
+
+
+	cout << "encapsulate with template " << endl;
+
+	CallLuaFunction("fNoArg");
+	CallLuaFunction("fTwoArg", 1, 2);
+	int r = CallLuaFunction<int>("fAdd", 1, 100);
+	cout << "fAdd = " << r << endl;
+
+
+	gLuaManager.ExecuteString("print(debug.traceback(\"test\"))");
+
 	return 0;
 }
 

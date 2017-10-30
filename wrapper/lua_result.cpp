@@ -25,7 +25,7 @@ bool LuaResult::Result(bool) {
 }
 
 int LuaResult::Result(int) {
-	return luaL_checkinteger(m_pState, -m_resultCount--);
+	return static_cast<int>(luaL_checkinteger(m_pState, -m_resultCount--));
 }
 
 double LuaResult::Result(double) {
