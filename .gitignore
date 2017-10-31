@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Generate Files
+tests/common.h
