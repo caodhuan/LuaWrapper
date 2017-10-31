@@ -13,3 +13,4 @@ addons:
     - g++-4.8
     - cmake
 script: cmake . && make
+dist: Precise
