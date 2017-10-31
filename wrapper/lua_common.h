@@ -8,6 +8,8 @@ typedef int ScriptHandler;
 #include "lua_manager.h"
 #include "lua_result.h"
 
+
+
 inline void GetArgs(LuaCaller& caller) {
 	return;
 }

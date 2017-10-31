@@ -1,10 +1,5 @@
 #pragma once
-#include "lua_arg.hpp"
 #include "lua_common.h"
-
-// lua返回值
-class LuaCaller;
-struct lua_State;
 
 class LuaResult {
 	friend LuaCaller;

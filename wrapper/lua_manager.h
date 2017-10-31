@@ -1,6 +1,5 @@
 #pragma once
 #include "lua_common.h"
-#include "lua_arg.hpp"
 
 #include <stdint.h>
 #include <functional>
@@ -73,7 +72,7 @@ public:
 	// 将lua传过的回调函数转变成handler
 	// lua_State*， 这里是为了与lua的接口保持一致
 	// idx， 你懂的
-	ScriptHandler lua_toScriptHandler(lua_State*, int idx);
+	ScriptHandler LuaToScriptHandler(lua_State* pState, int idx);
 
 	void RemoveScriptHandler(ScriptHandler handler);
     

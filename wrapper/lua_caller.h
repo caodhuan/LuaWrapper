@@ -1,18 +1,13 @@
 #pragma once
 
 #include "lua_common.h"
-#include "lua_arg.hpp"
 
 #include <string>
 
-struct lua_State;
-
 class LuaResult;
 
-class LuaManager;
-
 class LuaCaller {
-	friend LuaManager;
+	friend class LuaManager;
 public:
 	LuaCaller() {};
 

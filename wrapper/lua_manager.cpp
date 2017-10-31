@@ -100,7 +100,7 @@ void LuaManager::EndGetTableTable() {
 	lua_pop(m_pState, 1);
 }
 
-ScriptHandler LuaManager::lua_toScriptHandler(lua_State* pState, int idx) {
+ScriptHandler LuaManager::LuaToScriptHandler(lua_State* pState, int idx) {
 	if (pState != m_pState) {
 		TryLog("multi lua vm attached!");
 
