@@ -1,5 +1,6 @@
 #pragma once
 #include "lua_common.h"
+#include "lua_arg.hpp"
 
 #include <stdint.h>
 #include <functional>
