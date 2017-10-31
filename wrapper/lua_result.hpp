@@ -2,49 +2,49 @@
 
 
 template<class T>
-struct LuaResult {};
+struct LuaResultTraits {};
 
 template<>
-struct LuaResult<unsigned long> {
+struct LuaResultTraits<unsigned long> {
 	typedef unsigned  long type;
 };
 
 template<>
-struct LuaResult<unsigned long long> {
+struct LuaResultTraits<unsigned long long> {
 	typedef unsigned long long type;
 };
 
 template<>
-struct LuaResult<int> {
+struct LuaResultTraits<int> {
 	typedef	int type;
 };
 
 template<>
-struct LuaResult<double> {
+struct LuaResultTraits<double> {
 	typedef	double type;
 };
 
 template<>
-struct LuaResult<void> {
+struct LuaResultTraits<void> {
 	typedef	void type;
 };
 
 template<>
-struct LuaResult<char*> {
+struct LuaResultTraits<char*> {
 	typedef	const char* type;
 };
 
 template<>
-struct LuaResult<const char*> {
+struct LuaResultTraits<const char*> {
 	typedef	const char* type;
 };
 
 template<>
-struct LuaResult<bool> {
+struct LuaResultTraits<bool> {
 	typedef	bool type;
 };
 
 template<>
-struct LuaResult<float> {
+struct LuaResultTraits<float> {
 	typedef	float type;
 };

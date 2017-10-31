@@ -1,6 +1,6 @@
 #include "common.h"
-#include "lua_common.h"
 #include <iostream>
+#include "lua_wrapper.h"
 
 using namespace std;
 

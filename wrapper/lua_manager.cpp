@@ -1,4 +1,5 @@
 #include "lua_manager.h"
+#include "lua_common.h"
 #include "lua_caller.h"
 
 #include <string>

@@ -1,9 +1,9 @@
 #pragma once
 #include "lua_common.h"
 #include "lua_arg.hpp"
-#include "lua_result.h"
+
 class LuaResult {
-	friend LuaCaller;
+	friend class LuaCaller;
 public:
 	LuaResult();
 	~LuaResult();
