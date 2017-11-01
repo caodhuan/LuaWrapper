@@ -37,12 +37,16 @@ add_executable(Tests tests/main.cpp tests/common.h)
 target_link_libraries(Tests lua)
 
 # 添加protobuf
-find_library(protobuf_lib protobuf)
-
-if(protobuf_lib) 
+file(GLOB pb ${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/*)
+if(pb)
 	message(STATUS "found protobuf")
-	target_link_libraries(lua ${protobuf_lib})
-else()
-	message("not found protobuf")
-endif()
+	option(protobuf_BUILD_TESTS OFF)
+	
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/cmake/)
 
+	target_link_libraries(lua libprotobuf)
+	
+	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/src)
+else()
+	message("CANT find protobuf")
+endif()
