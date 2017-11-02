@@ -41,7 +41,7 @@ file(GLOB pb ${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/cmake/*)
 if(pb)
 	message(STATUS "found protobuf")
 	option(protobuf_BUILD_TESTS OFF)
-	
+	add_definitions(-DUSEPROTOBUF)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/cmake/)
 
 	target_link_libraries(lua libprotobuf)
