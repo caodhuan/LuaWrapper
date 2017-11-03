@@ -90,8 +90,6 @@ class __ProtobufErrorCollector : public google::protobuf::compiler::MultiFileErr
 
 void LuaProtobuf::LoadRootProto(const std::string& file, const std::string& diskPath)
 {
-	std::lock_guard<std::mutex> lock(m_mutex);
-
 	m_sourceTree->MapPath("", diskPath);
 
 	if (m_importer)

@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 project(LuaWrapper)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+add_definitions(-DUNICODE -D_UNICODE)
 
 file(GLOB libluafilesrc )
 
