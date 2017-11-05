@@ -8,46 +8,37 @@ using namespace google::protobuf::compiler;
 LuaProtobuf::LuaProtobuf()
 	: m_sourceTree(new DiskSourceTree())
 	, m_importer(NULL)
-	, m_factory(NULL)
-{
+	, m_factory(NULL) {
 
 }
-LuaProtobuf::~LuaProtobuf()
-{
-	if (m_sourceTree)
-	{
+LuaProtobuf::~LuaProtobuf() {
+	if (m_sourceTree) {
 		delete m_sourceTree;
 		m_sourceTree = NULL;
 	}
 
-	if (m_importer)
-	{
+	if (m_importer) {
 		delete m_importer;
 		m_importer = NULL;
 	}
 
-	if (m_factory)
-	{
+	if (m_factory) {
 		delete m_factory;
 		m_factory = NULL;
 	}
 }
 
 
-google::protobuf::Message* LuaProtobuf::CreateMessage(const char* typeName)
-{
+google::protobuf::Message* LuaProtobuf::CreateMessage(const char* typeName) {
 	google::protobuf::Message* message = NULL;
-	if (m_importer)
-	{
+	if (m_importer) {
 		const google::protobuf::Descriptor* descriptor = m_importer->pool()->FindMessageTypeByName(typeName);
 		if (descriptor) {
 			const google::protobuf::Message* prototype = m_factory->GetPrototype(descriptor);
-			if (prototype)
-			{
+			if (prototype) {
 				message = prototype->New();
 			}
-		}
-		else {// 如果在import进来的proto里找不到，就去生成的pool里再找一次 
+		} else {// 如果在import进来的proto里找不到，就去生成的pool里再找一次 
 			const google::protobuf::Descriptor* descriptor =
 				google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(typeName);
 			if (descriptor) {
@@ -58,9 +49,7 @@ google::protobuf::Message* LuaProtobuf::CreateMessage(const char* typeName)
 				}
 			}
 		}
-	}
-	else
-	{
+	} else {
 		const google::protobuf::Descriptor* descriptor =
 			google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(typeName);
 		if (descriptor) {
@@ -74,31 +63,26 @@ google::protobuf::Message* LuaProtobuf::CreateMessage(const char* typeName)
 	return message;
 }
 
-class __ProtobufErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
-{
+class __ProtobufErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector {
 	virtual void AddError(
 		const std::string & filename,
 		int line,
 		int column,
-		const std::string & message)
-	{
+		const std::string & message) {
 		char msg[512] = { 0 };
 		snprintf(msg, sizeof(msg), "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
 		std::cerr << msg;
 	}
 };
 
-void LuaProtobuf::LoadRootProto(const std::string& file, const std::string& diskPath)
-{
+void LuaProtobuf::LoadRootProto(const std::string& file, const std::string& diskPath) {
 	m_sourceTree->MapPath("", diskPath);
 
-	if (m_importer)
-	{
+	if (m_importer) {
 		delete m_importer;
 		m_importer = NULL;
 	}
-	if (m_factory)
-	{
+	if (m_factory) {
 		delete m_factory;
 		m_factory = NULL;
 	}
@@ -108,16 +92,14 @@ void LuaProtobuf::LoadRootProto(const std::string& file, const std::string& disk
 	m_factory = new DynamicMessageFactory();
 
 	const google::protobuf::FileDescriptor* fileDescriptor = m_importer->Import(file);
-	if (!fileDescriptor)
-	{
+	if (!fileDescriptor) {
 		char errMsg[256] = { 0 };
 		snprintf(errMsg, sizeof(errMsg), "LuaProtobuf::loadRootProto(): import failed!\n");
 		std::cerr << errMsg;
 	}
 }
 
-google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_State* pState, int stackIndex)
-{
+google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_State* pState, int stackIndex) {
 
 	if (!lua_istable(pState, stackIndex)) {
 		char errMsg[256] = { 0 };
@@ -154,8 +136,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 
 				lua_pop(pState, 1);
 				continue;
-			}
-			else {
+			} else {
 				bool isTable = lua_istable(pState, -1);
 				if (!isTable) {
 					char errMsg[256] = { 0 };
@@ -248,8 +229,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 				// remove value， keep the key
 				lua_pop(pState, 1);
 			}
-		}
-		else {
+		} else {
 
 			if (isRequired) {
 				if (isNil) {
@@ -258,8 +238,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 					std::cerr << errMsg;
 					return NULL;
 				}
-			}
-			else {
+			} else {
 				if (isNil) {
 					lua_pop(pState, 1);
 					continue;
@@ -350,8 +329,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 	return message;
 }
 
-void LuaProtobuf::PushProtobufToLuaTable(lua_State* pState, const google::protobuf::Message* message)
-{
+void LuaProtobuf::PushProtobufToLuaTable(lua_State* pState, const google::protobuf::Message* message) {
 	if (!message) {
 		std::cerr << "PushProtobuf2LuaTable failed, message is NULL\n";
 		return;
@@ -422,8 +400,7 @@ void LuaProtobuf::PushProtobufToLuaTable(lua_State* pState, const google::protob
 				lua_rawseti(pState, -2, i + 1); // lua's index start at 1
 			}
 
-		}
-		else {
+		} else {
 			char str[32] = { 0 };
 			switch (fd->cpp_type()) {
 

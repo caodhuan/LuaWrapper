@@ -59,3 +59,10 @@ else()
 	message("CANT find protobuf")
 endif()
 
+
+if(WIN32)
+	set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od /Oy- /MTd")
+	set(CMAKE_C_FLAGS_DEBUG "/Zi /Od /Oy- /MTd")
+else()
+
+endif()

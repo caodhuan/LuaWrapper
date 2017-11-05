@@ -7,8 +7,7 @@
 
 struct lua_State;
 
-class LuaProtobuf
-{
+class LuaProtobuf {
 public:
 	LuaProtobuf();
 	~LuaProtobuf();

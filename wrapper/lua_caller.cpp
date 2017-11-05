@@ -9,7 +9,7 @@ const static int weirdPos = 20;
 LuaCaller::LuaCaller(lua_State* pState, const char* funName)
 	: LuaCaller(pState) {
 	std::string fun = funName;
-	int index = fun.find('.');
+	size_t index = fun.find('.');
 	if (index != std::string::npos) {
 		std::string table = fun.substr(0, index);
 		std::string realFun = fun.substr(index + 1, fun.length() - 1);
@@ -93,7 +93,7 @@ LuaCaller& LuaCaller::Arg(bool value) {
 LuaCaller& LuaCaller::Arg(unsigned long value) {
 
 	++m_numArgs;
-    lua_pushinteger(m_pState, value);
+	lua_pushinteger(m_pState, value);
 
 	return *this;
 }
@@ -101,19 +101,19 @@ LuaCaller& LuaCaller::Arg(unsigned long value) {
 LuaCaller& LuaCaller::Arg(unsigned long long value) {
 
 	++m_numArgs;
-    lua_pushinteger(m_pState, value);
+	lua_pushinteger(m_pState, value);
 
 	return *this;
 }
 
 LuaCaller& LuaCaller::Arg(unsigned int value) {
-    lua_pushinteger(m_pState, value);
+	lua_pushinteger(m_pState, value);
 	++m_numArgs;
 	return *this;
 }
 
 LuaCaller& LuaCaller::Arg(long int value) {
-    lua_pushinteger(m_pState, value);
+	lua_pushinteger(m_pState, value);
 	++m_numArgs;
 	return *this;
 }

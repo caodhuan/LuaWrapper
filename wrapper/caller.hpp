@@ -9,8 +9,7 @@ static void GetArgs(LuaCaller& caller) {
 }
 
 template<typename T, typename ... Arguments>
-static void GetArgs(LuaCaller& caller, T t, Arguments&& ... params)
-{
+static void GetArgs(LuaCaller& caller, T t, Arguments&& ... params) {
 	caller += t;
 	GetArgs(caller, std::forward<Arguments>(params)...);
 }

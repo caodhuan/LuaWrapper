@@ -5,15 +5,16 @@
 #include <string>
 #include <sstream>
 #include <stdint.h>
+#include "lua_debugger.h"
 
 static const char* funTable = "__SCRIPT__FUNCTION__";
 static ScriptHandler globalhandler = 0;
 
 LuaManager::LuaManager()
 	: m_pState(NULL)
+	, m_debuger(NULL)
 	, m_logFunction(nullptr)
-	, m_errorFunction(nullptr)
-	{
+	, m_errorFunction(nullptr) {
 }
 
 LuaManager::~LuaManager() {
@@ -37,6 +38,9 @@ static int Panic(lua_State* pState) {
 }
 
 void LuaManager::InitScript() {
+	if (m_pState) {
+		return;
+	}
 	m_pState = luaL_newstate();
 
 	lua_atpanic(m_pState, Panic);
@@ -47,6 +51,8 @@ void LuaManager::InitScript() {
 	lua_pushstring(m_pState, funTable); //key
 	lua_newtable(m_pState);				// handler table
 	lua_rawset(m_pState, LUA_REGISTRYINDEX); // regist[funTable] = {}
+
+	m_debuger = new LuaDebugger(m_pState);
 }
 
 void LuaManager::AddSearchPath(const char* path) {
@@ -134,6 +140,10 @@ void LuaManager::RemoveScriptHandler(ScriptHandler handler) {
 	lua_rawset(m_pState, -3);
 
 	lua_pop(m_pState, 1); // pop funtable
+}
+
+LuaDebugger* LuaManager::GetDebugger() {
+	return m_debuger;
 }
 
 void LuaManager::SetLogFunction(LOGFUNCTION function) {

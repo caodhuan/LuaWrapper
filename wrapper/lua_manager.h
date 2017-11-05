@@ -11,7 +11,7 @@
 
 
 class LuaCaller;
-
+class LuaDebugger;
 typedef std::function<void(const char* fileName, uint32_t lineNum, const char* msg)> LOGFUNCTION;
 
 class LuaManager {
@@ -24,7 +24,7 @@ public:
 	lua_State* GetLuaState() {
 		return m_pState;
 	}
-	
+
 	static LuaManager& GetLuaManager() {
 		static LuaManager sc;
 		return sc;
@@ -32,8 +32,8 @@ public:
 public:
 	void InitScript();
 
-    void AddSearchPath(const char* path);
-	
+	void AddSearchPath(const char* path);
+
 	// 加载lua脚本环境
 	// path  路径
 	// startScript 启动脚本文件
@@ -42,33 +42,33 @@ public:
 	// 注册一个c函数到lua
 	void RegistFunction2Lua(const char* funName, lua_CFunction fun);
 
-    bool ExecuteString(const char* str);
+	bool ExecuteString(const char* str);
 
-    bool ExecuteFile(const char* path);
+	bool ExecuteFile(const char* path);
 
-    // 可以嵌套, 用下面的GetTableTable。
-    void BeginGetTable(const char* tableName);
-    void EndGetTable();
+	// 可以嵌套, 用下面的GetTableTable。
+	void BeginGetTable(const char* tableName);
+	void EndGetTable();
 
-    void BeginGetTableTable(const char* tableName);
-    void EndGetTableTable();
+	void BeginGetTableTable(const char* tableName);
+	void EndGetTableTable();
 
-    template<typename T>
-    T GetTableVarible(const char* varName) {
-        typedef typename LuaArg<T>::type ValueType;
+	template<typename T>
+	T GetTableVarible(const char* varName) {
+		typedef typename LuaArg<T>::type ValueType;
 
-        ValueType value = ValueType();
+		ValueType value = ValueType();
 
-        return DoGetTableVarible(varName, value);
-    }
+		return DoGetTableVarible(varName, value);
+	}
 
-    template<typename T>
-    T GetGlobalVarible(const char* varName) {
-        typedef typename LuaArg<T>::type ValueType;
+	template<typename T>
+	T GetGlobalVarible(const char* varName) {
+		typedef typename LuaArg<T>::type ValueType;
 
-        ValueType value = ValueType();
-        return DoGetGlobalVarible(varName, value);
-    }
+		ValueType value = ValueType();
+		return DoGetGlobalVarible(varName, value);
+	}
 
 	// 将lua传过的回调函数转变成handler
 	// lua_State*， 这里是为了与lua的接口保持一致
@@ -76,21 +76,23 @@ public:
 	ScriptHandler LuaToScriptHandler(lua_State* pState, int idx);
 
 	void RemoveScriptHandler(ScriptHandler handler);
-    
-    void SetLogFunction(LOGFUNCTION function);
+		
+	LuaDebugger* GetDebugger();
 
-    LOGFUNCTION GetLogFunction() {
-        return m_logFunction;
-    }
+	void SetLogFunction(LOGFUNCTION function);
 
-    void SetErrorFunction(LOGFUNCTION function);
+	LOGFUNCTION GetLogFunction() {
+		return m_logFunction;
+	}
 
-    LOGFUNCTION GetErrorFunction() {
-        return m_errorFunction;
-    }
-	
+	void SetErrorFunction(LOGFUNCTION function);
 
-    void GenerateLuaError(const char* errorMsg, ...);
+	LOGFUNCTION GetErrorFunction() {
+		return m_errorFunction;
+	}
+
+
+	void GenerateLuaError(const char* errorMsg, ...);
 
 	// 更新指定脚本
 	bool ReloadFile(const char* filePath);
@@ -103,19 +105,20 @@ private:
 	void PushFunScriptTable();
 
 private:
-    bool DoGetGlobalVarible(const char* varName, bool);
-    int DoGetGlobalVarible(const char* varName, int);
-    const char* DoGetGlobalVarible(const char* varName, const char*);
+	bool DoGetGlobalVarible(const char* varName, bool);
+	int DoGetGlobalVarible(const char* varName, int);
+	const char* DoGetGlobalVarible(const char* varName, const char*);
 
-    bool DoGetTableVarible(const char* varName, bool);
-    int DoGetTableVarible(const char* varName, int);
-    const char* DoGetTableVarible(const char* varName, const char*);
+	bool DoGetTableVarible(const char* varName, bool);
+	int DoGetTableVarible(const char* varName, int);
+	const char* DoGetTableVarible(const char* varName, const char*);
 
 	void DoLogMessage(LOGFUNCTION function, const char* msg);
 private:
 	lua_State* m_pState;
-    LOGFUNCTION  m_logFunction;
-    LOGFUNCTION  m_errorFunction;
+	LuaDebugger* m_debuger;
+	LOGFUNCTION  m_logFunction;
+	LOGFUNCTION  m_errorFunction;
 private:
 	LuaManager();
 	LuaManager(const LuaManager&);
