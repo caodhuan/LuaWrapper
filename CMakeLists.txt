@@ -48,6 +48,14 @@ if(pb)
 	target_link_libraries(lua libprotobuf)
 	
 	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rd/protobuf/src)
+
+	set_target_properties(libprotobuf PROPERTIES FOLDER libs)
+	set_target_properties(libprotobuf-lite PROPERTIES FOLDER libs)
+	set_target_properties(libprotoc PROPERTIES FOLDER libs)
+	set_target_properties(protoc PROPERTIES FOLDER libs)
+	set_target_properties(js_embed PROPERTIES FOLDER libs)
+
 else()
 	message("CANT find protobuf")
 endif()
+
