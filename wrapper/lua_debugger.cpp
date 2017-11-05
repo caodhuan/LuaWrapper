@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string.h>
 
 
 LuaDebugger::LuaDebugger(lua_State* pState)

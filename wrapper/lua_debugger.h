@@ -2,6 +2,7 @@
 #include "lua_common.h"
 
 #include <vector>
+#include <string>
 
 class LuaDebugger {
 	friend class LuaManager;
