@@ -32,6 +32,8 @@ set(COMMONHEADER "${CMAKE_CURRENT_SOURCE_DIR}/tests/common.h")
 
 file(WRITE ${COMMONHEADER} "#pragma once\n")
 file(APPEND ${COMMONHEADER} "#define SOURCEPATH \"${CMAKE_CURRENT_SOURCE_DIR}/scripts/\"\n")
+file(APPEND ${COMMONHEADER} "#define PROTOPATH \"${CMAKE_CURRENT_SOURCE_DIR}/protos/\"\n")
+file(APPEND ${COMMONHEADER} "#define PROTOFILE \"test.proto\"\n")
 
 add_executable(Tests tests/main.cpp tests/common.h)
 
@@ -66,3 +68,7 @@ if(WIN32)
 else()
 
 endif()
+
+add_executable(ProtoTests tests/proto.cpp tests/common.h)
+
+target_link_libraries(ProtoTests lua)
