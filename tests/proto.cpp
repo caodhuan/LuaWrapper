@@ -1,7 +1,9 @@
 #include "common.h"
-#include <iostream>
 #include "lua_wrapper.h"
+
 #include "google/protobuf/message.h"
+
+#include <iostream>
 
 using namespace google::protobuf;
 

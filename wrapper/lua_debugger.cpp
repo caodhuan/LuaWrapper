@@ -286,7 +286,7 @@ bool LuaDebugger::PrintFrame(int level) {
 }
 
 void LuaDebugger::PrintLua(std::vector<std::string>& fields) {
-	lua_getglobal(m_pState, "DebugPrint");
+	lua_getglobal(m_pState, "print");
 	lua_pushvalue(m_pState, -2);
 	for (std::vector<std::string>::const_iterator it = fields.begin(); it != fields.end(); it++) {
 		const char* str = it->c_str();

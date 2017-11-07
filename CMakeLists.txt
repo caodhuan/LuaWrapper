@@ -72,3 +72,7 @@ endif()
 add_executable(ProtoTests tests/proto.cpp tests/common.h)
 
 target_link_libraries(ProtoTests lua)
+
+add_executable(DebugTests tests/debug.cpp tests/common.h)
+
+target_link_libraries(DebugTests lua)
