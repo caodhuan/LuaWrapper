@@ -76,3 +76,8 @@ target_link_libraries(ProtoTests lua)
 add_executable(DebugTests tests/debug.cpp tests/common.h)
 
 target_link_libraries(DebugTests lua)
+
+
+set_target_properties(Tests PROPERTIES FOLDER tests)
+set_target_properties(ProtoTests PROPERTIES FOLDER tests)
+set_target_properties(DebugTests PROPERTIES FOLDER tests)
