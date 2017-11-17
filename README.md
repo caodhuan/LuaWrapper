@@ -2,7 +2,7 @@
 
 # LuaWrapper
 
-用c++写的lua封装库，支持Protobuf导出到lua，支持热更新protobuf
+用C++写的Lua封装库，支持命令行调试Lua脚本，支持Protobuf导出到lua，支持热更新Protobuf
 
 ## 构建
 
