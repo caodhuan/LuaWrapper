@@ -158,7 +158,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 				break;
 				case FieldDescriptor::CPPTYPE_FLOAT:
 				{
-					float value = luaL_checknumber(pState, -1);
+					float value = (float)luaL_checknumber(pState, -1);
 					reflection->AddFloat(message, fd, value);
 				}
 				break;
@@ -176,7 +176,7 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 				break;
 				case FieldDescriptor::CPPTYPE_ENUM: // 与int32一样处理
 				{
-					int32_t value = luaL_checkinteger(pState, -1);
+					int32_t value = (int32_t)luaL_checkinteger(pState, -1);
 					const EnumDescriptor* enumDescriptor = fd->enum_type();
 					const EnumValueDescriptor* valueDescriptor = enumDescriptor->FindValueByNumber(value);
 					reflection->AddEnum(message, fd, valueDescriptor);
@@ -184,13 +184,13 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 				break;
 				case FieldDescriptor::CPPTYPE_INT32:
 				{
-					int32_t value = luaL_checkinteger(pState, -1);
+					int32_t value = (int32_t)luaL_checkinteger(pState, -1);
 					reflection->AddInt32(message, fd, value);
 				}
 				break;
 				case FieldDescriptor::CPPTYPE_UINT32:
 				{
-					uint32_t value = luaL_checkinteger(pState, -1);
+					uint32_t value = (uint32_t)luaL_checkinteger(pState, -1);
 					reflection->AddUInt32(message, fd, value);
 				}
 				break;
@@ -280,13 +280,13 @@ google::protobuf::Message* LuaProtobuf::LuaToProtobuf(const char* pbName, lua_St
 			break;
 			case FieldDescriptor::CPPTYPE_INT32:
 			{
-				int32_t value = luaL_checkinteger(pState, -1);
+				int32_t value = (int32_t)luaL_checkinteger(pState, -1);
 				reflection->SetInt32(message, fd, value);
 			}
 			break;
 			case FieldDescriptor::CPPTYPE_UINT32:
 			{
-				uint32_t value = luaL_checkinteger(pState, -1);
+				uint32_t value = (uint32_t)luaL_checkinteger(pState, -1);
 				reflection->SetUInt32(message, fd, value);
 			}
 			break;
